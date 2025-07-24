@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/index :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <h1>Guestbook Read Page</h1>
+
+    <div class="form-group">
+      <label for="gno">gno</label>
+      <input type="text" class="form-control" name="gno" placeholder="gno" id="gno" th:value="${dto.gno}" readonly="readonly">
+    </div>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" name="title" placeholder="title" id="title" th:value="${dto.title}" readonly="readonly">
+    </div>
+    <div class="form-group">
+      <label>Content</label>
+      <textarea class="form-control" name="content" placeholder="Content"  readonly="readonly">[[${dto.content}]]</textarea>
+    </div>
+    <div class="form-group">
+      <label>Writer</label>
+      <input type="text" class="form-control" name="writer" placeholder="Writer" th:value="${dto.writer}" readonly="readonly">
+    </div>
+    <div class="form-group">
+      <label>regDate</label>
+      <input type="text" class="form-control" name="regDate" placeholder="regDate" th:value="${dto.regDate}" readonly="readonly">
+    </div>
+
+    <div class="form-group">
+      <label>modDate</label>
+      <input type="text" class="form-control" name="modDate" placeholder="modDate" th:value="${dto.modDate}" readonly="readonly">
+    </div>
+    <a th:href="@{/guestbook/modify(page = ${pageDto.page}, size = ${pageDto.size}, gno=${dto.gno})}" class="btn btn-primary mt-3">modify</a>
+    <a th:href="@{/guestbook/list(page = ${pageDto.page}, size = ${pageDto.size})}" class="btn btn-primary mt-3">List</a>
+
+  </th:block>
+</th:block>
+</html>

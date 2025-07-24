@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/index :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <h1 class="my-3">Guestbook Modify Page</h1>
+
+  <form th:action="@{/guestbook/modify}" method="post">
+    <div class="form-group">
+      <label for="gno">gno</label>
+      <input type="text" class="form-control" name="gno" placeholder="gno" id="gno" th:value="${dto.gno}" readonly>
+    </div>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" name="title" placeholder="title" id="title" th:value="${dto.title}" >
+    </div>
+    <div class="form-group">
+      <label>Content</label>
+      <textarea class="form-control" name="content" placeholder="Content"  readonly="readonly">[[${dto.content}]]</textarea>
+    </div>
+    <div class="form-group">
+      <label>Writer</label>
+      <input type="text" class="form-control" name="writer" placeholder="Writer" th:value="${dto.writer}" readonly>
+    </div>
+    <div class="form-group">
+      <label>regDate</label>
+      <input type="text" class="form-control" name="regDate" placeholder="regDate" th:value="${dto.regDate}" readonly>
+    </div>
+
+    <div class="form-group">
+      <label>modDate</label>
+      <input type="text" class="form-control" name="modDate" placeholder="modDate" th:value="${dto.modDate}" readonly>
+    </div>
+    <input type="hidden" name="page" th:value="${pageDto.page}" />
+    <input type="hidden" name="size" th:value="${pageDto.size}" />
+    <button type="submit" class="btn btn-primary my-2" onclick="return confirm('수정하시겠습니까?')">MODIFY</button>
+    <a th:href="@{/guestbook/list(page = ${pageDto.page}, size = ${pageDto.size})}" class="btn btn-warning my-2 ">List</a>
+    <button type="submit" class="btn btn-danger my-2" formaction="remove" onclick="return confirm('삭제하시겠습니까?')">REMOVE</button>
+  </form>
+
+  </th:block>
+</th:block>
+</html>

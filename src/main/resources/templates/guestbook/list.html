@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/index :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <h1 class="my-3">Guestbook List Page
+      <span>
+      <a th:href="@{/guestbook/register}" class="btn btn-outline-primary">REGISTER</a>
+    </span>
+    </h1>
+    <form action="/guestbook/list" method="get">
+      <input type="hidden" name="page" th:value="${dto.page}"/>
+      <input type="hidden" name="size" th:value="${dto.size}"/>
+      <div class="input-group">
+        <select class="form-select" name="type" id="type" aria-label="Example select with button addon">
+          <option th:selected="${requestDto.type == null}">선택</option>
+          <option th:selected="${requestDto.type == 't'}" value="t">제목</option>
+          <option th:selected="${requestDto.type == 'c'}" value="c">내용</option>
+          <option th:selected="${requestDto.type == 'w'}" value="w">작성자</option>
+          <option th:selected="${requestDto.type == 'tc'}" value="tc">제목 + 내용</option>
+          <option th:selected="${requestDto.type == 'tcw'}" value="tcw">제목 + 내용 + 작성자</option>
+        </select>
+        <input type="text" class="form-control w-50" name="keyword" th:value="${requestDto.keyword}"/>
+        <button class="btn btn-outline-secondary">Search</button>
+        <button class="btn btn-outline-secondary" type="button">Clear</button>
+      </div>
+    </form>
+
+    <table class="table table-striped table-bordered table-hover my-3">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Gno</th>
+        <th scope="col">Title</th>
+        <th scope="col">Regdate</th>
+      </tr>
+      <tr th:each="g : ${dto.list}">
+        <th scope="row">[[${g.gno}]]</th>
+        <td><a th:href="@{/guestbook/read(gno = ${g.gno}, page = ${dto.page}, size = ${dto.size})}" th:text="${g.title}"></a></td>
+        <th scope="row">[[${g.writer}]]</th>
+        <th scope="row">[[${g.regDate}]]</th>
+      </tr>
+    </table>
+    <ul class="pagination justify-content-center" >
+      <li class="page-item"><a class="page-link"  href="#" th:href="@{/guestbook/list(page = ${dto.start -1}, size = ${dto.size})}" th:if = "${dto.prev}">Prev</a></li>
+      <li th:class="'page-item' +  ${dto.page == page ? ' active' : ''}" th:each="page : ${dto.pageList}"><a class="page-link" th:href="@{/guestbook/list(page = ${page}, size = ${dto.size})}">[[${page}]]</a></li>
+      <li class="page-item"><a class="page-link"  href="#"  th:href="@{/guestbook/list(page = ${dto.end + 1}, size = ${dto.size})}" th:if = "${dto.next}">Next</a></li>
+    </ul>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Modal Heading</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            글 등록 완료
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script th:inline="javascript">
+      let msg = [[${msg}]];
+      console.log(msg)
+
+      window.addEventListener("load",function (e) {
+        if(msg) {
+
+          const myModal = new bootstrap.Modal(document.getElementById('myModal'))
+          myModal.show();
+        }
+      });
+
+    </script>
+
+  </th:block>
+</th:block>
+</html>
