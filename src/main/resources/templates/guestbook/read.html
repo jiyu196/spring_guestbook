@@ -29,8 +29,8 @@
       <label>modDate</label>
       <input type="text" class="form-control" name="modDate" placeholder="modDate" th:value="${dto.modDate}" readonly="readonly">
     </div>
-    <a th:href="@{/guestbook/modify(page = ${pageDto.page}, size = ${pageDto.size}, gno=${dto.gno})}" class="btn btn-primary mt-3">modify</a>
-    <a th:href="@{/guestbook/list(page = ${pageDto.page}, size = ${pageDto.size})}" class="btn btn-primary mt-3">List</a>
+    <a th:href="@{/guestbook/modify(page = ${pageDto.page}, size = ${pageDto.size}, gno=${dto.gno}, type=${requestDto.type}, keyword=${requestDto.keyword})}" class="btn btn-primary mt-3">modify</a>
+    <a th:href="@{/guestbook/list(page = ${pageDto.page}, size = ${pageDto.size}, type=${requestDto.type}, keyword=${requestDto.keyword})}" class="btn btn-primary mt-3">List</a>
 
   </th:block>
 </th:block>
